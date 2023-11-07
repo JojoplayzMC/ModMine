@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModMine Pro Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="icon.png">
+  </head>
+  <body>
+    <div id="quiz-container">
+      <div id="question-container">
+        <h2 id="question-text">Question 1:</h2>
+        <div id="choices" class="choices-container">
+          <div class="choice" data-answer="A">Option A</div>
+          <div class="choice" data-answer="B">Option B</div>
+          <div class="choice" data-answer="C">Option C</div>
+        </div>
+        <br>
+        <div id="timer" class="timer"></div>
+      </div>
+      <button id="next-button">Next</button>
+    </div>
+    <div id="result" class="result-container" style="display: none;">
+      <h2>Results:</h2>
+      <p id="score"></p>
+      <p id="message"></p>
+      <a id="unlock-link" href="https://www.mediafire.com/file/ix6hudp5fpu76bn/ModMine+Pro.zip/file" style="display: none;">Download</a>
+    </div>
+    <script>
+      const questions = [
+          {
+              question: "What is the original version of Minecraft?",
+              choices: ["Minecraft Bedrock Edition", "Minecraft Java Edition", "Minecraft Pocket Edition"],
+              correctAnswer: "B"
+          },
+          {
+              question: "Who made Minecraft",
+              choices: ["Notch", "Jeb", "Michaelsoft Binbows"],
+              correctAnswer: "A"
+          },
+          {
+              question: "What are the main modloaders",
+              choices: ["Forge, Fabric, Quilt", "LiteLoader, Quilt, Fabric, Cursed Fabric", "What's a modloader?"],
+              correctAnswer: "A"
+          },
+          {
+              question: "What does ModMine do?",
+              choices: ["Install Modloaders", "Helps you touch grass", "Install Mods"],
+              correctAnswer: "C"
+          },
+          {
+              question: "What are you expecting from ModMine Pro",
+              choices: ["More Mods", "Custom mod checkboxes", "I dunno, that's why I'm doin this!"],
+              correctAnswer: "C"
+          }
+      ];
+      
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let timerInterval;
+      
+      const questionText = document.getElementById("question-text");
+      const choicesContainer = document.getElementById("choices");
+      const nextButton = document.getElementById("next-button");
+      const resultDiv = document.getElementById("result");
+      const scoreParagraph = document.getElementById("score");
+      const messageParagraph = document.getElementById("message");
+      const unlockLink = document.getElementById("unlock-link");
+      const timerElement = document.getElementById("timer");
+      const quizContainer = document.getElementById("quiz-container");
+      const questionContainer = document.getElementById("question-container");
+      
+      function displayQuestion() {
+          clearInterval(timerInterval);
+          timerElement.textContent = "5s";
+          const currentQuestion = questions[currentQuestionIndex];
+          if (currentQuestion) {
+              questionText.textContent = `Question ${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+              choicesContainer.innerHTML = currentQuestion.choices.map((choice, index) => `
+                  <div class="choice" data-answer="${String.fromCharCode(65 + index)}">${choice}</div>
+              `).join('');
+              startTimer(5); // Start the timer for 5 seconds
+          } else {
+              finishQuiz();
+          }
+      }
+      
+      function startTimer(seconds) {
+          let remainingTime = seconds;
+          timerInterval = setInterval(() => {
+              timerElement.textContent = `${remainingTime}s`;
+              remainingTime--;
+      
+              if (remainingTime < 0) {
+                  clearInterval(timerInterval);
+                  moveNext();
+              }
+          }, 1000);
+      }
+      
+      function finishQuiz() {
+          const totalQuestions = questions.length;
+          // Fade out the question container, button, and quiz container
+          questionContainer.style.opacity = "0";
+          questionContainer.style.transition = "opacity 0.5s";
+          nextButton.style.opacity = "0";
+          nextButton.style.transition = "opacity 0.5s";
+          quizContainer.style.opacity = "0";
+          quizContainer.style.transition = "opacity 0.5s";
+      
+          setTimeout(() => {
+              questionContainer.style.display = "none"; // Hide the question container
+              nextButton.style.display = "none"; // Hide the button
+              quizContainer.style.display = "none"; // Hide the quiz container
+      
+              resultDiv.style.display = "block"; // Display the results
+              resultDiv.style.opacity = "1"; // Fade in the results container
+              resultDiv.style.transition = "opacity 0.5s"; // Add fade-in transition
+      
+              scoreParagraph.textContent = `You scored ${score} out of ${totalQuestions}`;
+              if (score === totalQuestions) {
+                  messageParagraph.textContent = "Congratulations! You now got ModMine Pro.";
+                  unlockLink.style.display = "block";
+              } else {
+                  messageParagraph.textContent = "You got some wrong.";
+              }
+          }, 500); // Wait for the fade-out transition to complete
+      }
+      
+      function moveNext() {
+          const currentQuestion = questions[currentQuestionIndex];
+          if (currentQuestion) {
+              currentQuestionIndex++;
+              resultDiv.style.transition = "opacity 0.5s"; // Add fade-out transition to the results
+              resultDiv.style.opacity = "0"; // Fade out the results container
+              displayQuestion();
+          }
+      }
+      
+      nextButton.addEventListener("click", moveNext);
+      
+      choicesContainer.addEventListener("click", function (e) {
+          const choiceDivs = choicesContainer.querySelectorAll('.choice');
+          choiceDivs.forEach((choiceDiv) => {
+              choiceDiv.classList.remove('selected');
+          });
+          if (e.target.classList.contains('choice')) {
+              const selectedChoice = e.target.getAttribute('data-answer');
+              if (selectedChoice === questions[currentQuestionIndex].correctAnswer) {
+                  score++;
+              }
+              e.target.classList.add('selected');
+          }
+      });
+      
+      displayQuestion();
+    </script>
+  </body>
+</html>
