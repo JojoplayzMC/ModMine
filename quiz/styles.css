@@ -1,0 +1,104 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c2c7cb;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+#quiz-container {
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 0.5vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.divs{
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 0.5vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#question-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.choice {
+    background-color: #00a2e8;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice:hover {
+    background-color: #0079a8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice.selected {
+    background-color: #ffbc42;
+    font-weight: bold;
+    color: #000;
+}
+
+#next-button {
+    background-color: #ffbc42;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#next-button:hover {
+    background-color: #ff9600;
+}
+
+.result-container {
+    text-align: center;
+    display: none;
+    margin-top: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 0.5vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#score {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#unlock-link {
+    text-decoration: none;
+    color: #ffbc42;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
